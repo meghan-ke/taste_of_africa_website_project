@@ -1,0 +1,543 @@
+/* =====================================================================
+   Tastes of Africa - styles.css
+   One stylesheet for every page. Sections, in order:
+
+   1. Design tokens (colors, fonts, spacing)
+   2. Base styles
+   3. Reusable pieces (buttons, video, highlight, hidden)
+   4. Header and navigation
+   5. Footer
+   6. Page intro band (Regions, Recipes, About, Contact, Stories)
+   7. Home page
+   8. Regions page
+   9. Stories page
+  10. Recipes page (filter + cards)
+  11. Recipe detail pages
+  12. About page
+  13. Contact page (form)
+  14. Larger screens (media queries)
+
+   Mobile styles come first; wider screens are added in section 14.
+   ===================================================================== */
+
+
+/* 1. DESIGN TOKENS
+   Change a value here and it changes everywhere. */
+:root {
+  --cream:  #F7F2E8;   /* page background */
+  --sand:   #EADFC8;   /* Food notes background */
+  --forest: #17392E;   /* header, hero, footer, active buttons */
+  --ochre:  #A8662B;   /* meta text, hover color */
+  --brick:  #9B3B2E;   /* small labels */
+  --ink:    #1C1B17;   /* main text */
+  --muted:  #6B6558;   /* secondary text */
+  --line:   #D9CFBD;   /* borders and image placeholders */
+  --spice:  #F2D58A;   /* <mark> highlight and main button */
+  --heart:  #C0392B;   /* saved favorite */
+
+  --font-heading: "DM Serif Display", Georgia, serif;
+  --font-body:    "DM Sans", system-ui, sans-serif;
+
+  --space-s:  0.75rem;
+  --space-m:  1.5rem;
+  --space-l:  3rem;
+  --space-xl: 5rem;
+
+  --radius-card: 12px;
+
+}
+
+
+/* 2. BASE */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;        /* base size */
+  line-height: 1.65;      /* base line height for readability */
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  line-height: 1.15;
+  margin: 0 0 var(--space-s);
+}
+h1 { font-size: clamp(2.4rem, 6vw, 4rem); }
+h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+h3 { font-size: 1.5rem; }
+
+p  { margin: 0 0 var(--space-s); }
+ul { margin: 0 0 var(--space-s); }
+img { max-width: 100%; display: block; }
+a  { color: inherit; }
+
+/* Keeps content from stretching edge to edge on big screens */
+.container { width: min(100% - 2rem, 1100px); margin-inline: auto; }
+
+section { padding-block: var(--space-xl); }
+.section-intro { color: var(--muted); max-width: 55ch; margin-bottom: var(--space-l); }
+
+/* Small uppercase label above a heading */
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brick);
+  margin-bottom: var(--space-s);
+}
+
+/* Visible keyboard focus on everything clickable */
+a:focus-visible, button:focus-visible {
+  outline: 3px solid var(--ochre);
+  outline-offset: 3px;
+}
+
+
+/* 3. REUSABLE PIECES */
+.button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--spice);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.button:hover { background: #fff; }
+
+/* Responsive YouTube frame: keeps a 16:9 shape at any width */
+.video-frame { aspect-ratio: 16 / 9; background: #000; }
+.video-frame iframe { width: 100%; height: 100%; border: 0; }
+
+/* <mark> highlights key ingredients, spices and cooking methods */
+mark { background: var(--spice); color: var(--ink); padding: 0 0.25em; }
+
+/* Used by script.js to hide filtered-out recipe cards.
+   [hidden] makes the HTML "hidden" attribute work even on elements that set display. */
+.hidden, [hidden] { display: none !important; }
+
+/* A photo box: tall shape, tan color shows if the image has not loaded.
+   position: relative lets the badge and heart sit on top of the photo. */
+.photo { position: relative; aspect-ratio: 4 / 5; background: var(--line);
+         border-radius: var(--radius-card); overflow: hidden; }
+.photo img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Small meta line above a dish title */
+.dish-meta {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--ochre);
+  margin: var(--space-s) 0 0.25rem;
+}
+
+.back-link { display: inline-block; margin-top: var(--space-s); font-weight: 700; }
+
+
+/* 4. HEADER AND NAVIGATION */
+.site-header { background: var(--forest); color: #fff; }
+
+.header-inner {
+  display: flex;
+  flex-wrap: wrap;           /* lets the open menu drop below the logo on phones */
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--space-s);
+}
+
+.logo { font-family: var(--font-heading); font-size: 1.5rem; text-decoration: none; }
+
+/* Hamburger button: only shown on phones (hidden again in section 14) */
+.menu-toggle {
+  background: none;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 0.4rem 0.9rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+.main-nav { display: none; width: 100%; }    /* closed until the button adds .open */
+.main-nav.open { display: block; }
+.main-nav ul { list-style: none; margin: 0; padding: 0; }
+.main-nav a {
+  display: block;
+  padding: 0.6rem 0;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+/* Hover effect and the current-page marker share one style */
+.main-nav a:hover,
+.main-nav a[aria-current="page"] {
+  color: var(--spice);
+  border-bottom-color: var(--spice);
+}
+
+
+/* 5. FOOTER */
+.site-footer { background: var(--forest); color: #fff; padding-block: var(--space-l); }
+.site-footer .container { display: grid; gap: var(--space-m); }
+.site-footer ul { list-style: none; margin: 0; padding: 0; }
+.site-footer a { text-decoration: none; }
+.site-footer a:hover { color: var(--spice); }
+
+
+/* 6. PAGE INTRO BAND
+   The dark green band at the top of every page except Home. */
+.page-intro { background: var(--forest); color: var(--cream); padding-block: var(--space-l); }
+.page-intro .eyebrow { color: var(--spice); }
+.page-intro .section-intro { color: #d9d2c2; margin-bottom: 0; }
+
+
+/* 7. HOME PAGE */
+
+/* Hero: dark green overlay on top of a background photo.
+   The image path is relative to this CSS file. */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: 80vh;
+  background: var(--forest) url("../images/hero/hero.jpg") center / cover;
+  color: #fff;
+}
+
+.hero-video { position: absolute; inset: 0; z-index: 0; }
+.hero-video iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 56.25vw;
+  min-height: 100%;
+  min-width: 177.78vh;
+  transform: translate(-50%, -50%);
+  border: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.hero-video iframe.ready { opacity: 1; }
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg,
+    rgba(23, 57, 46, 0.75) 0%,
+    rgba(23, 57, 46, 0.35) 55%,
+    rgba(23, 57, 46, 0.1) 100%);
+}
+
+.hero .container { position: relative; z-index: 2; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);}
+.hero p { font-size: 1.15rem; max-width: 45ch; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-video { display: none; }
+}
+
+/* Signature dishes (cards) */
+.dish-grid { display: grid; gap: 2rem; list-style: none; margin: 0; padding: 0; }
+.dish-card { margin: 0; }
+
+/* Dish titles on Home and Recipes share one look */
+.dish-card h3,
+.recipe-card h3 { font-size: 1.5rem; }
+.dish-card h3 a,
+.recipe-card h3 a {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+.dish-card h3 a:hover,
+.recipe-card h3 a:hover { color: var(--ochre); }
+
+.dish-card figcaption p:last-child,
+.recipe-card p:last-child { color: var(--muted); font-size: 0.95rem; }
+
+/* Explore by region: four dark tiles */
+.regions { background: #fff; }
+.region-grid { display: grid; gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
+.region-tile {
+  display: block;
+  height: 100%;
+  padding: var(--space-m);
+  background: var(--forest);
+  color: #fff;
+  text-decoration: none;
+  border-radius: var(--radius-card);
+}
+.region-tile:hover { background: var(--ochre); }
+.region-tile p { margin: 0; font-size: 0.95rem; }
+
+.region-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: var(--space-s);
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--line);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Culture video next to its text */
+.culture .container { display: grid; gap: var(--space-l); align-items: center; }
+
+/* Food notes: three columns separated by thin lines */
+.notes { background: var(--sand); }
+.notes-grid { display: grid; margin-top: var(--space-l); }
+.note { padding: var(--space-m); border-top: 1px solid var(--line); }
+.note-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-l);
+}
+.note-tag { text-transform: uppercase; color: var(--brick); font-weight: 700; }
+.note p { color: var(--muted); font-size: 0.95rem; }
+.read-more {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.read-more:hover { color: var(--ochre); }
+
+
+/* 8. REGIONS PAGE */
+.region-block {
+  padding-block: var(--space-l);
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 1rem;       /* small gap above the block after a tile link jump */
+}
+.page-intro + .region-block { border-top: 0; }   /* no line under the dark band */
+.region-block > .container > p { max-width: 60ch; }
+
+.region-details { display: grid; gap: var(--space-m); margin-block: var(--space-m); }
+.region-details > div {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: var(--space-m);
+}
+.region-details h3 { font-size: 1.25rem; }
+.region-details ul { padding-left: 1.2rem; margin: 0; }
+
+.region-block .video-frame { margin-bottom: var(--space-m); }
+.region-dish a { font-weight: 700; }
+
+
+/* 9. STORIES PAGE */
+.story { max-width: 65ch; padding-block: var(--space-l); border-top: 1px solid var(--line); }
+.story:first-of-type { border-top: 0; }
+
+
+/* 10. RECIPES PAGE */
+
+/* Filter buttons */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-bottom: var(--space-m);
+  margin-bottom: var(--space-l);
+  border-bottom: 1px solid var(--line);
+}
+.filter-button {
+  padding: 0.5rem 0.9rem;
+  background: transparent;
+  border: 1px solid #8f877a;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.filter-button:hover { border-color: var(--forest); }
+.filter-button.active {                 /* the selected region */
+  background: var(--forest);
+  border-color: var(--forest);
+  color: #fff;
+}
+
+/* Recipe cards */
+.recipe-grid { display: grid; gap: 2rem; list-style: none; margin: 0; padding: 0; }
+
+.badge {                                 /* region label, top left of the photo */
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.35rem 0.6rem;
+  background: var(--cream);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fav-button {                            /* heart, top right of the photo */
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  background: var(--cream);
+  border: 0;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.fav-button:hover { color: var(--heart); }
+.fav-button.saved { color: var(--heart); }   /* added by script.js when saved */
+
+.recipe-card h3 span { transition: transform 0.2s; }
+.recipe-card h3 a:hover span { transform: translateX(4px); }
+
+
+/* 11. RECIPE DETAIL PAGES
+   A narrower column keeps long text easy to read. */
+.recipe { padding-block: var(--space-l); }
+.recipe .container { width: min(100% - 2rem, 800px); }
+
+.recipe-header { margin-bottom: var(--space-m); }
+.recipe-meta { color: var(--muted); margin: 0; }
+
+.recipe-photo { margin: 0 0 var(--space-l); }
+.recipe-photo img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: var(--line); }
+.recipe-photo figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; }
+
+.recipe-about,
+.recipe-ingredients,
+.recipe-steps,
+.recipe-video,
+.recipe-nutrition,
+.recipe-map { padding-block: 0; margin-bottom: var(--space-l); }
+
+.recipe h2 { font-size: 1.8rem; }
+.recipe-ingredients h3 { font-size: 1.2rem; margin-top: var(--space-m); }
+.recipe-ingredients ul { padding-left: 1.2rem; }
+.recipe-ingredients li { margin-bottom: 0.25rem; }
+
+/* Expandable cooking steps (<details> + <summary>) */
+.recipe-steps details { border-bottom: 1px solid var(--line); padding-block: 0.9rem; }
+.recipe-steps summary { font-weight: 700; cursor: pointer; }
+.recipe-steps summary:hover { color: var(--ochre); }
+.recipe-steps details p { margin: var(--space-s) 0 0; }
+
+/* Nutrition table */
+.recipe-nutrition table { width: 100%; border-collapse: collapse; background: #fff; }
+.recipe-nutrition caption { text-align: left; font-size: 0.85rem; color: var(--muted); padding-bottom: 0.5rem; }
+.recipe-nutrition th,
+.recipe-nutrition td { padding: 0.6rem 0.9rem; text-align: left; border: 1px solid var(--line); }
+.recipe-nutrition thead th { background: var(--forest); color: #fff; }
+
+/* Map */
+.recipe-map iframe,
+.about-map iframe { width: 100%; height: 350px; border: 0; background: var(--line); }
+
+
+/* 12. ABOUT PAGE */
+.about-mission,
+.about-history,
+.about-map { padding-block: var(--space-l); }
+
+.about-mission p,
+.about-history p,
+.about-map > .container > p { max-width: 65ch; }
+
+.mission-statement {
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  line-height: 1.3;
+  border-left: 4px solid var(--ochre);
+  padding-left: var(--space-m);
+  margin-bottom: var(--space-m);
+}
+.about-history h3 { margin-top: var(--space-m); }
+.about-map iframe { margin-top: var(--space-s); }
+
+
+/* 13. CONTACT PAGE (form) */
+.contact-form { max-width: 600px; }
+.form-row { margin-bottom: var(--space-m); }
+.form-row label { display: block; font-weight: 700; margin-bottom: 0.4rem; }
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  background: #fff;
+  border: 1px solid #8f877a;
+  border-radius: 2px;
+  font: inherit;
+  color: var(--ink);
+}
+
+/* Focus state: green border with a soft glow */
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--forest);
+  box-shadow: 0 0 0 3px rgba(23, 57, 46, 0.25);
+}
+
+/* Marked by script.js when the message is too short */
+.contact-form textarea[aria-invalid="true"] { border-color: var(--brick); }
+.form-error { color: var(--brick); font-weight: 700; margin: 0.4rem 0 0; }
+
+.form-success {
+  max-width: 600px;
+  padding: var(--space-l) var(--space-m);
+  background: #fff;
+  border-left: 4px solid var(--forest);
+}
+
+
+/* 14. LARGER SCREENS */
+@media (min-width: 700px) {
+  .dish-grid    { grid-template-columns: repeat(2, 1fr); }
+  .recipe-grid  { grid-template-columns: repeat(2, 1fr); }
+  .region-grid  { grid-template-columns: repeat(2, 1fr); }
+  .region-details { grid-template-columns: 1fr 1fr; }
+  .notes-grid   { grid-template-columns: repeat(3, 1fr); }
+  .note         { border-top: 0; border-left: 1px solid var(--line); }
+  .note:first-child { border-left: 0; }
+  .site-footer .container { grid-template-columns: 2fr 1fr; }
+  .recipe-map iframe,
+  .about-map iframe { height: 420px; }
+}
+
+@media (min-width: 900px) {
+  /* The menu button disappears and the links sit in a row */
+  .menu-toggle { display: none; }
+  .main-nav { display: block; width: auto; }
+  .main-nav ul { display: flex; gap: var(--space-m); }
+
+  .culture .container { grid-template-columns: 1fr 1fr; }
+  .dish-grid,
+  .recipe-grid,
+  .region-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Small hover transitions, skipped for people who prefer less motion */
+@media (prefers-reduced-motion: no-preference) {
+  .region-tile, .button, .filter-button { transition: background 0.2s, border-color 0.2s; }
+}

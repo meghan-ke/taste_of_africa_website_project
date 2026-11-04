@@ -137,10 +137,28 @@ function setupContactForm() {
 
 
 /* ---------------------------------------------------------------------
+   5. HERO VIDEO
+   The video starts invisible, so the still image shows first. When the
+   YouTube player has loaded, we add the "ready" class and the CSS fades
+   the video in.
+   --------------------------------------------------------------------- */
+function setupHeroVideo() {
+  const iframe = document.querySelector(".hero-video iframe");
+  if (!iframe) return;
+
+  iframe.addEventListener("load", function () {
+    setTimeout(function () {
+      iframe.classList.add("ready");
+    }, 1500);   // short pause so the video is playing before it fades in
+  });
+}
+
+/* ---------------------------------------------------------------------
    START EVERYTHING once the page has loaded
    --------------------------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", function () {
   setupMenuToggle();
+  setupHeroVideo();
   setupRecipeFilter();
   setupFavorites();
   setupContactForm();
