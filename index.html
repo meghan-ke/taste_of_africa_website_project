@@ -11,6 +11,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 
+    <link rel="preconnect" href="https://www.youtube.com">
+    <link rel="preconnect" href="https://i.ytimg.com">
+
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/script.js" defer></script>
 
@@ -34,24 +37,24 @@
     <main>
         <!--Hero section: Welcome text and intro video over a background video -->
         <section class="hero">
+            <div class="hero-video" aria-hidden="true">
+                <iframe src="https://www.youtube.com/embed/1zyDUkdVZ0E?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=1zyDUkdVZ0E&amp;controls=0&amp;modestbranding=1&amp;playsinline=1&amp;rel=0"
+                        title="Background video of African food culture"
+                        tabindex="-1"
+                        allow="autoplay; encrypted-media"></iframe>
+            </div>
+
             <div class="container">
-                <div>
-                    <h1> Every pot in Africa has a story</h1>
-                    <p> From <mark>smoky jollof</mark> to slow-braised tagine, explore the dishes, regions and traditions that make African food one of the richest in the world.</p>
-                    <a class="button" href="recipes.html">Browse recipes</a>
-                </div>
-                <div class="video-frame">
-                    <!-- This is the video in the hero section and you can change the video by replacing the ID -->
-                     <iframe width="560" height="315" src="https://www.youtube.com/embed/1zyDUkdVZ0E?si=GwN7mC80-y-Hp5ij" title="Introduction to African food culture" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
-                            
-                </div>
+                <h1>Every pot in Africa has a story</h1>
+                <p>From <mark>smoky jollof</mark> to slow-braised tagine, explore the dishes, regions and traditions that make African food one of the richest in the world.</p>
+                <a class="button" href="recipes.html">Browse recipes</a>
             </div>
         </section>
 
         <!-- Signature dishes across various regions: one <figure> per dish. The title links to the full recipe page-->
             <section class="dishes">
                 <div class="container">
-                    <p class="section-intro"> Four dishes, four corners of the African continent. Open one to see the full recipe</p>
+                    <p class="section-intro"> three dishes, three corners of the African continent. Open one to see the full recipe</p>
 
                     <ul class="dish-grid">
                         <li>
@@ -95,10 +98,10 @@
                     <p class="section-intro"> Climate, trade and history shape what each region cooks.</p>
 
                     <ul class="region-grid">
-                        <li><a class="region-title" href="regions.html#west-africa"><h3>West Africa</h3><p>Rice, yam, palm oil and fierce pepper heat.</p></a></li>
-                        <li><a class="region-title" href="regions.html#north-africa"><h3>North Africa</h3><p>Couscous, saffron and slow-cooked stew.</p></a></li>
-                        <li><a class="region-title" href="regions.html#east-africa"><h3>East Africa</h3><p> Teff, lentils and shared platters.</p></a></li>
-                        <li><a class="region-title" href="regions.html#south-africa"><h3>Southern Africa</h3><p> Open-fire grilling and Cape-Malay spice.</p></a></li>
+                        <li><a class="region-tile" href="regions.html#west-africa"><img class="region-icon" src="./images/dishes/red_jollof_rice.jpg" alt="" loading="lazy"><h3>West Africa</h3><p>Rice, yam, palm oil and fierce pepper heat.</p></a></li>
+                        <li><a class="region-tile" href="regions.html#north-africa"><img class="region-icon" src="./images/dishes/chicken_tagine_couscous.jpg" alt="" loading="lazy"><h3>North Africa</h3><p>Couscous, saffron and slow-cooked stew.</p></a></li>
+                        <li><a class="region-tile" href="regions.html#east-africa"><img class="region-icon" src="./images/dishes/Injera_stew.jpg" alt="" loading="lazy"><h3>East Africa</h3><p> Teff, lentils and shared platters.</p></a></li>
+                        <li><a class="region-tile" href="regions.html#south-africa"><img class="region-icon" src="./images/dishes/Durban_curry.png" alt="" loading="lazy"><h3>Southern Africa</h3><p> Open-fire grilling and Cape-Malay spice.</p></a></li>
 
                     </ul>
                 </div>
