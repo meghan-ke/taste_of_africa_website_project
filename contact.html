@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tastes of Africa | Contact</title>
+  <meta name="description" content="Send a message to the Tastes of Africa team.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">Tastes of Africa</a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
+      <nav class="main-nav" id="main-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="recipes.html">Recipes</a></li>
+          <li><a href="regions.html">Regions</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="page-intro">
+      <div class="container">
+        <h1>Contact us</h1>
+        <p class="section-intro">Have a recipe to share, a question or feedback? Send us a message.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+
+        <!-- FORM. script.js intercepts the submit, checks the message length,
+             then hides this form and shows the thank-you message below. -->
+        <form id="contact-form" class="contact-form">
+
+          <div class="form-row">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+
+          <div class="form-row">
+            <label for="country">Country</label>
+            <select id="country" name="country" required>
+              <option value="">Select your country</option>
+              <option>Algeria</option>
+              <option>Egypt</option>
+              <option>Ethiopia</option>
+              <option>Ghana</option>
+              <option>Kenya</option>
+              <option>Morocco</option>
+              <option>Nigeria</option>
+              <option>Rwanda</option>
+              <option>Senegal</option>
+              <option>South Africa</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <!-- A <datalist> only works with a text <input>, not a <select>,
+               so it is attached to this optional field. It suggests dish names as you type. -->
+          <div class="form-row">
+            <label for="favorite-dish">Favorite dish (optional)</label>
+            <input type="text" id="favorite-dish" name="favorite-dish" list="dish-suggestions">
+            <datalist id="dish-suggestions">
+              <option value="Jollof Rice"></option>
+              <option value="Tagine"></option>
+              <option value="Injera"></option>
+              <option value="Bunny Chow"></option>
+            </datalist>
+          </div>
+
+          <div class="form-row">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="6" required></textarea>
+            <!-- Shown by script.js when the message is too short -->
+            <p id="message-error" class="form-error" role="alert" hidden>Please write a message of more than 20 characters.</p>
+          </div>
+
+          <button type="submit" class="button">Send message</button>
+        </form>
+
+        <!-- Shown by script.js after a successful submit. The name is filled in by JavaScript. -->
+        <div id="form-success" class="form-success" role="status" hidden>
+          <h2>Thank you, <span id="success-name"></span>!</h2>
+          <p>We've received your message and will reply soon.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div>
+        <p><strong>Tastes of Africa</strong></p>
+        <p>Celebrating the flavors, ingredients and people behind African cooking.</p>
+      </div>
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="recipes.html">Recipes</a></li>
+          <li><a href="regions.html">Regions</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+</body>
+</html>
